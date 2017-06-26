@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, print_function
+
+from tweepy import Stream
+from tweepy import OAuthHandler
+from tweepy.streaming import StreamListener
+import time
+import json
+import codecs
+
+
+ckey = 'nVi8EMfJiah9EZiSpe1ve1Aku'
+csecret = 'ZIHsZU34kmOMLQ0Ik0BTTVWXGRTLpmKncOYhJeLtwnab10D4k7'
+atoken = '718614759000641536-MD7D0B8FYoqBklqjtiCzemONi51PVJQ'
+asecret = 'sFY2Tlc8EP9UsthGwpzJWBVXmvMIVcNS0lc44gRTaJm3c'
+
+ 
+class listener(StreamListener):
+
+    def on_data(self, data):
+        try:
+            tweet = json.loads(data)
+
+            screen_name = tweet["user"]["screen_name"]
+            created_at = tweet ["created_at"]
+            identity = tweet ["id"]
+            text = tweet ["text"]
+
+            hashtag1 = tweet ["entities"]["hashtags"][0]["text"]
+
+
+            
+            print((text))
+            SaveFile = codecs.open("d:\\twitterHash.txt","a","utf-8")
+            SaveFile.write((text))
+            SaveFile.write('\n')
+            SaveFile.close()
+            return True
+
+        except BaseException, e:
+            print ('failed on data,',str(e))
+            time.sleep(5)
+
+    def on_error(self, status):
+        print (status)
+
+auth = OAuthHandler(ckey, csecret)
+auth.set_access_token(atoken, asecret)
+
+twitterStream = Stream(auth, listener())
+twitterStream.filter(track=[unicode("#عيدكم_مبارك","utf-8")])
