@@ -10,10 +10,10 @@ import json
 import codecs
 
 
-ckey = 'nVi8EMfJiah9EZiSpe1ve1Aku'
-csecret = 'ZIHsZU34kmOMLQ0Ik0BTTVWXGRTLpmKncOYhJeLtwnab10D4k7'
-atoken = '718614759000641536-MD7D0B8FYoqBklqjtiCzemONi51PVJQ'
-asecret = 'sFY2Tlc8EP9UsthGwpzJWBVXmvMIVcNS0lc44gRTaJm3c'
+ckey = ''
+csecret = ''
+atoken = ''
+asecret = ''
 
  
 class listener(StreamListener):
