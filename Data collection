@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, print_function
+
+from tweepy import Stream
+from tweepy import OAuthHandler
+from tweepy.streaming import StreamListener
+import time
+import json
+import codecs
+import sys
+
+
+ckey = ''
+csecret = ''
+atoken = ''
+asecret = ''
+
+non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+
+class StdOutListener(StreamListener):
+
+    def on_data(self, data):
+        try:
+            
+            #print(data)
+            
+            tweet = json.loads(data)['text']
+
+            print(tweet.translate(non_bmp_map))
+
+
+            saveThis = str(time.time())+'::'+tweet
+            SaveFile = codecs.open('d:\\StremHash.csv','a', "utf-8")
+            SaveFile.write(saveThis)
+            SaveFile.write('\n')
+            SaveFile.close()
+            return True
+
+        except BaseException, e:
+            print ('failed on data,',str(e))
+            time.sleep(5)
+
+    def on_error(self, status):
+        print(status)
+
+if __name__ == '__main__':
+    
+    l = StdOutListener()
+    auth = OAuthHandler(ckey, csecret)
+    auth.set_access_token(atoken, asecret)
+
+    twitterStream = Stream(auth, l)
+    twitterStream.filter(track=[unicode("#عيدكم_مبارك","utf-8")])
+   
