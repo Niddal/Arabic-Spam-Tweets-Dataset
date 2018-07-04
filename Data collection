@@ -1,55 +1,70 @@
-# -*- coding: utf-8 -*-
+import csv
 
-from __future__ import absolute_import, print_function
+listTrainingData = []
+listPredictionModel = []
+listDetectionModel = []
 
-from tweepy import Stream
-from tweepy import OAuthHandler
-from tweepy.streaming import StreamListener
-import time
-import json
-import codecs
-import sys
+with open('100_data.csv', 'r') as csvFile:
+  reader = csv.reader(csvFile)
+  for row in reader:
+    listTrainingData.append(row)
 
+csvFile.close()
 
-ckey = ''
-csecret = ''
-atoken = ''
-asecret = ''
+listPredictionModel = listTrainingData
+listDetectionModel = listTrainingData
 
-non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+'''
+def displayTrainingData():
+  i = 0
+  while (i < len(listTrainingData)):
+    print(listTrainingData[i])
+    i = i + 1
 
-class StdOutListener(StreamListener):
+displayTrainingData()
+'''
+'''
+def displayPredictionData():
+  i = 0
+  while (i < len(listPredictionModel)):
+    print(listPredictionModel[i])
+    i = i + 1
 
-    def on_data(self, data):
-        try:
-            
-            #print(data)
-            
-            tweet = json.loads(data)['text']
+displayPredictionData()
+'''
+'''
+listLength = (len(listPredictionModel[0]))
 
-            print(tweet.translate(non_bmp_map))
+j = 1
+colIndex = 1
+while (colIndex < listLength):
+  while (j < len(listPredictionModel)):
+    listPredictionModel[j][colIndex] = 0
+    j = j + 1
+  
+  j = 1
+  colIndex = colIndex + 2
 
+b = 0
+for b in range(len(listPredictionModel)):
+    print (listPredictionModel[b])
+    b = b + 1
+'''
+'''
+listLength = (len(listDetectionModel[0]))
 
-            saveThis = str(time.time())+'::'+tweet
-            SaveFile = codecs.open('d:\\StremHash.csv','a', "utf-8")
-            SaveFile.write(saveThis)
-            SaveFile.write('\n')
-            SaveFile.close()
-            return True
+j = 1
+colIndex = 0
+while (colIndex < listLength):
+  while (j < len(listDetectionModel)):
+    listDetectionModel[j][colIndex] = 0
+    j = j + 1
+  
+  j = 1
+  colIndex = colIndex + 2
 
-        except BaseException, e:
-            print ('failed on data,',str(e))
-            time.sleep(5)
-
-    def on_error(self, status):
-        print(status)
-
-if __name__ == '__main__':
-    
-    l = StdOutListener()
-    auth = OAuthHandler(ckey, csecret)
-    auth.set_access_token(atoken, asecret)
-
-    twitterStream = Stream(auth, l)
-    twitterStream.filter(track=[unicode("#عيدكم_مبارك","utf-8")])
-   
+b = 0
+for b in range(len(listDetectionModel)):
+    print (listDetectionModel[b])
+    b = b + 1
+'''
